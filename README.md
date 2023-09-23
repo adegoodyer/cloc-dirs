@@ -9,7 +9,21 @@ Version 0.0.0
 Usage: cloc-dirs [option] ...
 
 Options:
-  --d          Take report as input and perform data analysis
+  -d          Take report as input and perform data analysis
+```
+
+## Install package dependencies
+```bash
+# install globally
+pip install pandas
+pip install matplotlib
+
+# or use viutal ienvironment
+# (will have to activate/deactivate before/after each use)
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+deactivate
 ```
 
 ## Install
