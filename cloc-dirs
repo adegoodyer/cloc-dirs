@@ -11,8 +11,8 @@ skip_dirs=("app-build" "app" "data" "epos" "socket" "stack")
 
 # generate a timestamp in the format YYYY-MM-DD-HHMMSS
 # output file name with timestamp hash
-timestamp=$(date +'%Y-%m-%d-%H%M%S')
-output_file="cloc-dir-results-$timestamp.txt"
+timestamp=$(date +'%Y%m%d%H%M%S')
+output_file="cloc-dir-report-$timestamp"
 
 # check if a command is available
 command_exists() {
