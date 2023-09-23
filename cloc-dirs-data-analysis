@@ -1,0 +1,85 @@
+#!/usr/bin/env python
+#
+# Author:       Ade Goodyer
+# Date:         23rd Sept 2023
+# Description:  Take cloc-dirs report as input and perform data analysis
+#
+import sys
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def create_dataframe(filename):
+    # Create empty lists to store the data
+    data = []
+    current_section = None  # Track each section (repo)
+
+    # Open the text file and read it line by line
+    with open(filename, 'r') as file:
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue  # Skip empty lines
+
+            # Check if the line contains a section header
+            if line.endswith('/'):
+                current_section = line.strip('/')
+                continue
+
+            # Check if the line contains table headers
+            if line.startswith("Language"):
+                continue  # Skip table headers
+
+            # Split the line into columns using whitespace as the delimiter
+            columns = line.split()
+
+            # Ensure that the line has the expected number of columns
+            if len(columns) == 5:
+                # Extract data into a dictionary
+                entry = {
+                    "Repo": current_section,
+                    "Languages": columns[0],
+                    "Files": int(columns[1]),
+                    "Blank": int(columns[2]),
+                    "Comments": int(columns[3]),
+                    "Code": int(columns[4]),
+                }
+
+                # Append the dictionary to the data list
+                data.append(entry)
+
+    # Create a pandas DataFrame from the data
+    df = pd.DataFrame(data)
+    return df
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python dataframe.py <filename>")
+        sys.exit(1)
+
+    filename = sys.argv[1]
+    df = create_dataframe(filename)
+
+    # Sum the metrics across all repositories
+    total_metrics = df[['Repo', 'Files', 'Blank', 'Comments', 'Code']].groupby('Repo').sum()
+
+    # Create a full-screen figure
+    fig, ax = plt.subplots(figsize=(16, 9))
+
+    # Plot the stacked bar chart for all repositories
+    total_metrics.plot(kind='bar', stacked=True, ax=ax)
+
+    # Customize the plot
+    plt.xlabel('Repository')
+    plt.ylabel('Counts')
+    plt.title('Code Metrics for All Repositories')
+    plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
+    plt.legend(title='Metrics', loc='upper right')
+
+    # Set the bottom margin to 0.327
+    plt.subplots_adjust(bottom=0.327)
+
+    # Show the plot
+    plt.show()
+
+if __name__ == "__main__":
+    main()
