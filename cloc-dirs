@@ -14,6 +14,23 @@ skip_dirs=("app-build" "app" "data" "epos" "socket" "stack")
 timestamp=$(date +'%Y%m%d%H%M%S')
 output_file="cloc-dir-report-$timestamp"
 
+# flag to indicate whether to call dataframe.py
+call_dataframe=false
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+  -d | --dataframe)
+    call_dataframe=true
+    shift
+    ;;
+  *)
+    echo "Unknown option: $1"
+    exit 1
+    ;;
+  esac
+done
+
 # check if a command is available
 command_exists() {
   command -v "$1" >/dev/null 2>&1
@@ -54,3 +71,8 @@ mv "${output_file}.tmp" "$output_file"
 # Print the path of the report file
 echo
 echo "Report saved as $(realpath "$output_file")"
+
+# Call cloc-dirs-data-analysis if the flag is set
+if [ "$call_dataframe" == true ]; then
+  cloc-dirs-data-analysis "$(realpath "$output_file")"
+fi
