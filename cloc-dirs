@@ -20,7 +20,7 @@ call_dataframe=false
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
   case "$1" in
-  -d | --dataframe)
+  -da | --data-analytics)
     call_dataframe=true
     shift
     ;;
@@ -60,7 +60,7 @@ for dir in */; do
     echo "Processing $dir"
     echo >>"$output_file"
     echo "$dir" >>"$output_file"
-    (cd "$dir" && cloc --quiet --hide-rate .) >>"$output_file"
+    (cd "$dir" && cloc --quiet --hide-rate --exclude-dir=tests,_helm,helm .) >>"$output_file"
   fi
 done
 
