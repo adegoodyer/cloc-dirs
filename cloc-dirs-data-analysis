@@ -67,6 +67,26 @@ def print_dataframe(df):
     pd.reset_option('display.max_columns')
     pd.reset_option('display.width')
 
+def sort_and_print_dataframe(df):
+    # Sort DataFrame in descending order
+    sorted_df = df.sort_values(by="Lines of Code", ascending=False)
+
+    # Set Pandas options to display all rows and columns
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', None)
+
+    # Print sorted DataFrame
+    print("Sorted DataFrame:")
+    print(sorted_df)
+
+    # Reset Pandas options to their default values (optional)
+    pd.reset_option('display.max_rows')
+    pd.reset_option('display.max_columns')
+    pd.reset_option('display.width')
+
+    # Save DataFrame to text file
+    save_dataframe_to_file(sorted_df, "cloc-dir-sorted-dataframe.txt")
 def main():
     if len(sys.argv) != 2:
         print("Usage: python dataframe.py <filename>")
@@ -77,6 +97,8 @@ def main():
 
     # Print DataFrame
     print_dataframe(df)
+    # Print sorted DataFrame
+    # sort_and_print_dataframe(df)
 
     # Sum the metrics across all repositories
     total_metrics = df[['Repo', 'Files', 'Blank Lines', 'Comments', 'Lines of Code']].groupby('Repo').sum()
