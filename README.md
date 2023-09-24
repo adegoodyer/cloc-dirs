@@ -4,12 +4,13 @@
 - execute cloc . on all directories in current directory and output sorted report.
 
 ```bash
-Version 0.0.0
+# cloc dirs
+cloc-dirs # report only
+cloc-dirs --data-analytics # report and perform data analysis
 
-Usage: cloc-dirs [option] ...
+# cloc-dirs-data-analysis
+cloc-dirs-data-analysis /Users/adriangoodyer/dt/cloc-dir-report-20230924112500
 
-Options:
-  -d          Take report as input and perform data analysis
 ```
 
 ## Install package dependencies
@@ -18,7 +19,7 @@ Options:
 pip install pandas
 pip install matplotlib
 
-# or use viutal ienvironment
+# or use virtual environment
 # (will have to activate/deactivate before/after each use)
 python -m venv venv
 source venv/bin/activate

@@ -20,7 +20,7 @@ call_dataframe=false
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
   case "$1" in
-  -d | --dataframe)
+  -da | --data-analytics)
     call_dataframe=true
     shift
     ;;
