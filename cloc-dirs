@@ -60,7 +60,7 @@ for dir in */; do
     echo "Processing $dir"
     echo >>"$output_file"
     echo "$dir" >>"$output_file"
-    (cd "$dir" && cloc --quiet --hide-rate .) >>"$output_file"
+    (cd "$dir" && cloc --quiet --hide-rate --exclude-dir=tests,_helm,helm .) >>"$output_file"
   fi
 done
 
