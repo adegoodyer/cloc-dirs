@@ -39,9 +39,9 @@ def create_dataframe(filename):
                     "Repo": current_section,
                     "Languages": columns[0],
                     "Files": int(columns[1]),
-                    "Blank": int(columns[2]),
+                    "Blank Lines": int(columns[2]),
                     "Comments": int(columns[3]),
-                    "Code": int(columns[4]),
+                    "Lines of Code": int(columns[4]),
                 }
 
                 # Append the dictionary to the data list
@@ -51,6 +51,22 @@ def create_dataframe(filename):
     df = pd.DataFrame(data)
     return df
 
+def print_dataframe(df):
+    # Set Pandas options to display all rows and columns
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', None)
+
+    # Print DataFrame
+    print("Dataframe:")
+    with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+        print(df)
+
+    # Reset Pandas options to their default values (optional)
+    pd.reset_option('display.max_rows')
+    pd.reset_option('display.max_columns')
+    pd.reset_option('display.width')
+
 def main():
     if len(sys.argv) != 2:
         print("Usage: python dataframe.py <filename>")
@@ -59,8 +75,11 @@ def main():
     filename = sys.argv[1]
     df = create_dataframe(filename)
 
+    # Print DataFrame
+    print_dataframe(df)
+
     # Sum the metrics across all repositories
-    total_metrics = df[['Repo', 'Files', 'Blank', 'Comments', 'Code']].groupby('Repo').sum()
+    total_metrics = df[['Repo', 'Files', 'Blank Lines', 'Comments', 'Lines of Code']].groupby('Repo').sum()
 
     # Create a full-screen figure
     fig, ax = plt.subplots(figsize=(16, 9))
