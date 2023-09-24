@@ -13,7 +13,7 @@ cloc-dirs-data-analysis /Users/adriangoodyer/dt/cloc-dir-report-20230924112500
 
 ```
 
-## Install package dependencies
+## Install Python package dependencies
 ```bash
 # install globally
 pip install pandas
@@ -27,7 +27,7 @@ pip install -r requirements.txt
 deactivate
 ```
 
-## Install
+## Add cloned repo to PATH
 Download/clone and add cloned repo location to PATH as you normally would for you shell or OS distribution.
 
 ```bash
